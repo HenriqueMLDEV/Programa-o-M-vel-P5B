@@ -7,14 +7,15 @@ import {
   StyleSheet,
 } from "react-native";
 import React, { useContext } from "react";
-import StudyCardsContext from "../contexts/StudyCardsContext.js";
+import StudyCardsContext from "../contexts/StudyCardsContext";
 
 const CardListScreen = ({ navigation }) => {
   const { cards, deleteCard } = useContext(StudyCardsContext);
 
-  const inProgressCards = cards.filter((card) => card.status === "in_progress");
-  const concludedCards = cards.filter((card) => card.status === "done");
-  const backlogCards = cards.filter((card) => card.status === "backlog");
+  //Filtrar os cards por status
+  const inProgressCards = cards.filter((card) => card.status === "fazendo");
+  const concludedCards = cards.filter((card) => card.status === "feito");
+  const backlogCards = cards.filter((card) => card.status === "fazer");
 
   const today = new Date();
   const dueSoonCards = cards.filter((card) => {
@@ -38,7 +39,7 @@ const CardListScreen = ({ navigation }) => {
         <Button
           title="Deletar"
           onPress={() => deleteCard(item.id)}
-          color="#ff6347"
+          color="#EFDF32"
         />
       </View>
     </View>
@@ -54,7 +55,16 @@ const CardListScreen = ({ navigation }) => {
           Tasks a Vencer: {dueSoonCards.length}
         </Text>
       </TouchableOpacity>
-      <Text style={styles.sectionTitle}>Em Progresso</Text>
+      <Text style={styles.sectionTitle}>A fazer</Text>
+      <FlatList
+        data={backlogCards}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={renderCard}
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+      />
+      <View style={styles.divider} />
+      <Text style={styles.sectionTitle}>Fazendo</Text>
       <FlatList
         data={inProgressCards}
         keyExtractor={(item) => item.id.toString()}
@@ -63,18 +73,9 @@ const CardListScreen = ({ navigation }) => {
         showsHorizontalScrollIndicator={false}
       />
       <View style={styles.divider} />
-      <Text style={styles.sectionTitle}>Concluído</Text>
+      <Text style={styles.sectionTitle}>Finalizado</Text>
       <FlatList
         data={concludedCards}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={renderCard}
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-      />
-      <View style={styles.divider} />
-      <Text style={styles.sectionTitle}>Backlog</Text>
-      <FlatList
-        data={backlogCards}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderCard}
         horizontal={true}
@@ -85,7 +86,7 @@ const CardListScreen = ({ navigation }) => {
         style={styles.addButton}
         onPress={() => navigation.navigate("CardEdit")}
       >
-        <Text style={styles.addButtonText}>+ Adicionar Novo Card</Text>
+        <Text style={styles.addButtonText}>+ Adicionar Card</Text>
       </TouchableOpacity>
     </View>
   );
@@ -95,10 +96,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    backgroundColor: "#f9f9f9",
+    backgroundColor: "#000000",
   },
   dueSoonButton: {
-    backgroundColor: "#ff4500",
+    backgroundColor: "#F7DC6F",
     padding: 10,
     borderRadius: 10,
     justifyContent: "center",
@@ -106,12 +107,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   dueSoonButtonText: {
-    color: "#ffffff",
+    color: "#00000",
     fontSize: 16,
     fontWeight: "bold",
   },
   suggestButton: {
-    backgroundColor: "#4682b4",
+    backgroundColor: "#8BE9FD",
     padding: 10,
     borderRadius: 10,
     justifyContent: "center",
@@ -119,7 +120,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   suggestButtonText: {
-    color: "#ffffff",
+    color: "#00000",
     fontSize: 16,
     fontWeight: "bold",
   },
@@ -145,7 +146,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   addButton: {
-    backgroundColor: "#4682b4",
+    backgroundColor: "#38F7C3",
     padding: 15,
     borderRadius: 10,
     justifyContent: "center",
@@ -162,9 +163,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginTop: 20,
     marginBottom: 10,
+    color: "#fff",
   },
   divider: {
-    borderBottomColor: "#cccccc",
+    borderBottomColor: "#FFFFFF",
     borderBottomWidth: 1,
     marginVertical: 10,
   },

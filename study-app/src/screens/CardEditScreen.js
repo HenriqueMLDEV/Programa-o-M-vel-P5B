@@ -1,7 +1,7 @@
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import React, { useContext, useState, useEffect } from "react";
 import { Picker } from "@react-native-picker/picker";
-import StudyCardsContext from "../contexts/StudyCardsContext.js";
+import StudyCardsContext from "../contexts/StudyCardsContext";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 const CardEditScreen = ({ route, navigation }) => {
@@ -11,11 +11,10 @@ const CardEditScreen = ({ route, navigation }) => {
 
   const [title, setTitle] = useState(card.title || "");
   const [notes, setNotes] = useState(card.notes || "");
-  const [status, setStatus] = useState(card.status || "");
+  const [status, setStatus] = useState(card.status || "fazer");
   const [dueDate, setDueDate] = useState(
     card.dueDate ? new Date(card.dueDate) : new Date()
   );
-
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
 
   useEffect(() => {
@@ -69,6 +68,7 @@ const CardEditScreen = ({ route, navigation }) => {
         value={title}
         onChangeText={setTitle}
         placeholder="Título do Card..."
+        placeholderTextColor="#C0C0C0"
       />
       <Text style={styles.label}>Notas:</Text>
       <TextInput
@@ -77,9 +77,10 @@ const CardEditScreen = ({ route, navigation }) => {
         onChangeText={setNotes}
         placeholder="Insira uma descrição..."
         multiline
+        placeholderTextColor="#C0C0C0"
       />
       <Text style={styles.label}>Data/Hora de Término:</Text>
-      <Button title="Escolhar Data" onPress={showDatePicker} color="#32cd32" />
+      <Button title="Escolhar Data" onPress={showDatePicker} color="#38F7C3" />
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
         mode="datetime"
@@ -96,11 +97,11 @@ const CardEditScreen = ({ route, navigation }) => {
         style={styles.input}
         onValueChange={(itemValue, itemIndex) => setStatus(itemValue)}
       >
-        <Picker.Item label="Backlog" value="backlog" />
-        <Picker.Item label="Em Progresso" value="in_progress" />
-        <Picker.Item label="Concluído" value="done" />
+        <Picker.Item label="A fazer" value="fazer" />
+        <Picker.Item label="Fazendo" value="fazendo" />
+        <Picker.Item label="Finalizando" value="feito" />
       </Picker>
-      <Button title="Salvar" onPress={handleSave} color="#32cd32" />
+      <Button title="Salvar" onPress={handleSave} color="#38F7C3" />
     </View>
   );
 };
@@ -109,25 +110,27 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#f9f9f9",
+    backgroundColor: "#fff",
   },
   label: {
     fontSize: 16,
     marginBottom: 5,
+    color: "#000",
   },
   selectedDateLabel: {
     fontSize: 16,
     marginBottom: 15,
-    color: "#555555",
+    color: "#000",
   },
   input: {
     fontSize: 14,
     borderWidth: 1,
-    borderColor: "#cccccc",
+    borderColor: "#000",
     padding: 10,
     marginBottom: 15,
     borderRadius: 5,
     width: "100%",
+    color: "#000",
   },
 });
 

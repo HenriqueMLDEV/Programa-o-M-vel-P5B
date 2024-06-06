@@ -1,6 +1,6 @@
 import { View, Text, FlatList, StyleSheet } from "react-native";
 import React, { useContext } from "react";
-import StudyCardsContext from "../contexts/StudyCardsContext.js";
+import StudyCardsContext from "../contexts/StudyCardsContext";
 
 const TasksDueSoonScreen = () => {
   const { cards } = useContext(StudyCardsContext);
@@ -22,7 +22,7 @@ const TasksDueSoonScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Tasks a Vencer nos Próximos 15 Dias</Text>
+      <Text style={styles.header}>Tasks a Vencer nos Próximos Dias</Text>
       <FlatList
         data={dueSoonCards}
         keyExtractor={(item) => item.id.toString()}

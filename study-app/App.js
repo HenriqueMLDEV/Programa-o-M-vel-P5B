@@ -21,7 +21,7 @@ const App = () => {
           <Stack.Screen
             name="CardEdit"
             component={CardEditScreen}
-            options={{ title: "Editar Card" }}
+            options={{ title: "Editar um Card" }}
           />
           <Stack.Screen
             name="TasksDueSoon"
